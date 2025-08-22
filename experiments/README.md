@@ -43,7 +43,7 @@ Meanwhile, these experiments (fp32, bf16, compile, SDPA, Triton, NT) can run on 
 
 - PyTorch nightly and Python 3.10
 - https://github.com/cpuhrsch/segment-anything fork of https://github.com/facebookresearch/segment-anything with additional commits if you want to reproduce baseline and first few experiments
-- This https://github.com/pytorch-labs/segment-anything-fast
+- This https://github.com/meta-pytorch/segment-anything-fast
 
 ### Installation instructions
 
@@ -63,7 +63,7 @@ $ git clone https://github.com/cpuhrsch/segment-anything.git
 $ cd segment-anything
 $ pip install -e .
 $ cd ..
-$ git clone https://github.com/pytorch-labs/segment-anything-fast.git
+$ git clone https://github.com/meta-pytorch/segment-anything-fast.git
 $ cd segment-anything-fast
 $ pip install -e .
 ```
@@ -92,11 +92,11 @@ Measurement
 Accuracy
 Our main goal is to verify that our performance optimizations do not degrade the accuracy of the model. We do not aim to reproduce any paper results or aim to make statements about the accuracy of this model on the dataset. This measurement serves as an additional integration test in conjunction with numerous unit and other separate integration tests.
 
-We calculate the center points of the mask annotations using a rudimentary version of https://arxiv.org/pdf/2304.02643.pdf, section D.1.Point Sampling ([code](https://github.com/pytorch-labs/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/data.py#L10-L120)). These center points serve as annotations per image. Note that the number of masks and thus number of annotations per image vary.
+We calculate the center points of the mask annotations using a rudimentary version of https://arxiv.org/pdf/2304.02643.pdf, section D.1.Point Sampling ([code](https://github.com/meta-pytorch/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/data.py#L10-L120)). These center points serve as annotations per image. Note that the number of masks and thus number of annotations per image vary.
 
-These images and annotations are given to the predict_torch method of an instance of SamPredictor to predict masks. These are then compared to the ground truth masks using the Intersection over Union (IoU) metric ([code](https://github.com/pytorch-labs/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/metrics.py#L4-L22)). We calculate the mean IoU (mIoU) metric over the entire 5000 images of the validation dataset to track accuracy.
+These images and annotations are given to the predict_torch method of an instance of SamPredictor to predict masks. These are then compared to the ground truth masks using the Intersection over Union (IoU) metric ([code](https://github.com/meta-pytorch/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/metrics.py#L4-L22)). We calculate the mean IoU (mIoU) metric over the entire 5000 images of the validation dataset to track accuracy.
 Performance
-Our goal is to measure the runtime of PyTorch models. We purposefully exclude data movements or calculation of the metrics. Specifically we measure the execution time on the GPU of running the image encoder (e.g. vit_h) and SamPredictor.predict_torch ([code](https://github.com/pytorch-labs/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/eval_combo.py#L127-L165), [code](https://github.com/pytorch-labs/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/eval_combo.py#L68-L99)).
+Our goal is to measure the runtime of PyTorch models. We purposefully exclude data movements or calculation of the metrics. Specifically we measure the execution time on the GPU of running the image encoder (e.g. vit_h) and SamPredictor.predict_torch ([code](https://github.com/meta-pytorch/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/eval_combo.py#L127-L165), [code](https://github.com/meta-pytorch/segment-anything-fast/blob/67d5c894569e99b9fdba55cfcf2f724be9f68994/experiments/eval_combo.py#L68-L99)).
 
 Each experiment is run in a separate Python process created from scratch. We run three batches of warmup before each experiment. This also implies that we are excluding compilation time from benchmarking. 
 
