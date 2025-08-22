@@ -30,7 +30,7 @@ Step 2
 Install the package
 
 ```
-pip install git+https://github.com/pytorch-labs/segment-anything-fast.git
+pip install git+https://github.com/meta-pytorch/segment-anything-fast.git
 ```
 
 ## Usage
@@ -73,4 +73,4 @@ That means the very last bar is the combination of
 
 ## License
 
-`segment-anything-fast` is released under the [Apache 2.0](https://github.com/pytorch-labs/segment-anything-fast/main/LICENSE) license.
+`segment-anything-fast` is released under the [Apache 2.0](https://github.com/meta-pytorch/segment-anything-fast/main/LICENSE) license.

@@ -21,7 +21,7 @@ setup(
     },
     description='A pruned, quantized, compiled, nested and batched implementation of segment-anything',
     long_description_content_type='text/markdown',
-    url='https://github.com/pytorch-labs/segment-anything-fast',
+    url='https://github.com/meta-pytorch/segment-anything-fast',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
